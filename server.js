@@ -23,7 +23,8 @@ const port = process.env.PORT || 3001;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
+console.log("port:" + port);
+console.log("uri" + uri);
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
