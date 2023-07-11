@@ -1,6 +1,8 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
-const uri =
-  "mongodb+srv://yuval:levi@cluster0.spf7mxz.mongodb.net/?retryWrites=true&w=majority";
+// const uri =
+//   "mongodb+srv://yuval:levi@cluster0.spf7mxz.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
 const express = require("express");
 const http = require("http");
 const cors = require("cors"); // Add this line
