@@ -7,6 +7,9 @@ const http = require("http");
 const cors = require("cors");
 // Import socket.io with a connection to a http server
 const { Server } = require("socket.io");
+const db = require("./config/db.config");
+const CodeBlock = require("./models/codeBlock.model");
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
@@ -46,7 +49,6 @@ io.on("connection", (socket) => {
   });
 });
 
-const db = require("./config/db.config");
 // mongoose
 //   .connect(uri, {
 //     useNewUrlParser: true,
@@ -142,7 +144,6 @@ app.put("/api/reset", (req, res) => {
 // });
 
 //const CodeBlock = mongoose.model("CodeBlock", codeBlockSchema);
-const CodeBlock = require("./models/codeBlock.model");
 
 let codeBlocksDefault = [
   {
