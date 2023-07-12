@@ -17,5 +17,9 @@ const codeBlockSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  solution: {
+    type: String,
+    required: true,
+  },
 });
 module.exports = mongoose.model("CodeBlock", codeBlockSchema);

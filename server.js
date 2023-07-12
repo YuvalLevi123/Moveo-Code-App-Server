@@ -49,18 +49,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// mongoose
-//   .connect(uri, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("Connected to MongoDB");
-//   })
-//   .catch((error) => {
-//     console.error("Error connecting to MongoDB:", error);
-//   });
-
 // GET /api/codeblocks
 app.get("/api/codeblocks", (req, res) => {
   CodeBlock.find()
@@ -110,7 +98,11 @@ app.put("/api/reset", (req, res) => {
   for (let i = 1; i < 5; i++) {
     const updatePromise = CodeBlock.updateOne(
       { id: parseInt(i) },
-      { currentVisitors: 0, code: codeBlocksDefault[i - 1].code }
+      {
+        currentVisitors: 0,
+        code: codeBlocksDefault[i - 1].code,
+        solution: codeBlocksDefault[i - 1].solution,
+      }
     );
     updatePromises.push(updatePromise);
   }
@@ -124,27 +116,6 @@ app.put("/api/reset", (req, res) => {
     });
 });
 
-// const codeBlockSchema = new mongoose.Schema({
-//   title: {
-//     type: String,
-//     required: true,
-//   },
-//   code: {
-//     type: String,
-//     required: true,
-//   },
-//   id: {
-//     type: String,
-//     required: true,
-//   },
-//   currentVisitors: {
-//     type: Number,
-//     required: true,
-//   },
-// });
-
-//const CodeBlock = mongoose.model("CodeBlock", codeBlockSchema);
-
 let codeBlocksDefault = [
   {
     id: "1",
@@ -156,6 +127,13 @@ let codeBlocksDefault = [
       () => alert("Greetings!");
     
     welcome();`,
+    solution: `let age = prompt("What is your age?", 18);
+
+    let welcome = (age < 18) ?
+      () => alert('Hello!') :
+      () => alert("Greetings!");
+    
+    welcome(solution);`,
   },
   {
     id: "2",
@@ -172,6 +150,18 @@ let codeBlocksDefault = [
     }
     
     f();`,
+    solution: `async function f() {
+
+      let promise = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("done!"), 1000)
+      });
+    
+      let result = await promise; // wait until the promise resolves (*)
+    
+      alert(result); 
+    }
+    
+    f(solution);`,
   },
   {
     id: "3",
@@ -180,6 +170,10 @@ let codeBlocksDefault = [
       name: "John",  // by key "name" store value "John"
       age: 30        // by key "age" store value 30
     };`,
+    solution: `let user = {     // an object
+      name: "John",  // by key "name" store value "John"
+      age: 30        // by key "age" store value 30
+    }; (solution)`,
   },
   {
     id: "4",
@@ -193,5 +187,14 @@ let codeBlocksDefault = [
     let user = users.find(item => item.id == 1);
     
     alert(user.name);`,
+    solution: `let users = [
+      {id: 1, name: "John"},
+      {id: 2, name: "Pete"},
+      {id: 3, name: "Mary"}
+    ];
+    
+    let user = users.find(item => item.id == 1);
+    
+    alert(solution);`,
   },
 ];
