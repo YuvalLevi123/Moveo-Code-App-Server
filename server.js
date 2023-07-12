@@ -21,8 +21,6 @@ const port = process.env.PORT || 3001;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-console.log("port:" + port);
-console.log("uri" + uri);
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
@@ -81,7 +79,6 @@ app.get("/api/codeblocks/:id", (req, res) => {
 app.put("/api/codeblocks/:id", (req, res) => {
   const { id } = req.params;
   const { currentVisitors } = req.body;
-  console.log(req.body);
   CodeBlock.findOneAndUpdate({ id: id }, { currentVisitors: currentVisitors })
     .then((updatedCodeBlock) => {
       io.emit("codeUpdate", updatedCodeBlock);
