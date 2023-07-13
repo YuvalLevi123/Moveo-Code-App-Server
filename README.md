@@ -14,7 +14,7 @@ Code-App is a real-time coding platform for collaborative learning and sharing o
 ## Technologies
 
 • React.js
-• Node.js
+• Node.js Express
 • CSS
 • Socket.IO
 • MongoDB
@@ -23,7 +23,8 @@ Code-App is a real-time coding platform for collaborative learning and sharing o
 ## Deployment
 
 The client is deployed on Netlify and accessible through the following URL: https://moveo-yuval.netlify.app/
-The server is deployed on Herokua.
+
+The server is deployed on Heroku.
 
 ## Known Issues & Future Improvements
 
