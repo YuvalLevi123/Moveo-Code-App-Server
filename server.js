@@ -1,29 +1,22 @@
 require("dotenv").config();
-//const uri =
-// "mongodb+srv://yuval:levi@cluster0.spf7mxz.mongodb.net/?retryWrites=true&w=majority";
 const uri = process.env.MONGODB_URI;
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
-// Import socket.io with a connection to a http server
 const { Server } = require("socket.io");
 const db = require("./config/db.config");
 const CodeBlock = require("./models/codeBlock.model");
-
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 app.use(cors());
 app.use(express.json());
 
-// Start the server
 const port = process.env.PORT || 3001;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-
   socket.on("codeUpdate", (data) => {
     CodeBlock.findOneAndUpdate(
       { id: data.id },
@@ -34,7 +27,6 @@ io.on("connection", (socket) => {
         if (!updatedCodeBlock) {
           return console.log("Code block not found");
         }
-
         socket.broadcast.emit("codeUpdate", updatedCodeBlock);
       })
       .catch((error) => {
@@ -42,12 +34,9 @@ io.on("connection", (socket) => {
       });
   });
 
-  socket.on("disconnect", () => {
-    console.log(`User Disconnected: ${socket.id}`);
-  });
+  socket.on("disconnect", () => {});
 });
 
-// GET /api/codeblocks
 app.get("/api/codeblocks", (req, res) => {
   CodeBlock.find()
     .then((codeBlocks) => {
@@ -59,7 +48,6 @@ app.get("/api/codeblocks", (req, res) => {
     });
 });
 
-// GET /api/codeblocks/:id
 app.get("/api/codeblocks/:id", (req, res) => {
   const { id } = req.params;
   CodeBlock.findOne({ id: id })
@@ -75,7 +63,6 @@ app.get("/api/codeblocks/:id", (req, res) => {
     });
 });
 
-// PUT /api/codeblocks/:id
 app.put("/api/codeblocks/:id", (req, res) => {
   const { id } = req.params;
   const { currentVisitors } = req.body;
